@@ -116,9 +116,6 @@ const Editor = () => {
   const [selectedImage, setSelectedImage] = useState<HTMLImageElement | null>(null)
   const [showMarkdown, setShowMarkdown] = useState(false)
   const [markdown, setMarkdown] = useState('')
-  const [resizingImage, setResizingImage] = useState(false)
-  const [initialSize, setInitialSize] = useState({ width: 0, height: 0 })
-  const [initialPos, setInitialPos] = useState({ x: 0, y: 0 })
 
   const editor = useEditor({
     extensions: [
@@ -153,9 +150,6 @@ const Editor = () => {
       handleKeyDown: (view, event) => {
         // 如果按Tab键，阻止默认行为
         if (event.key === 'Tab') {
-          const { selection } = view.state
-          const { empty, $anchor } = selection
-          
           // 只在列表项内允许Tab缩进
           if (!editor?.isActive('listItem')) {
             event.preventDefault()
