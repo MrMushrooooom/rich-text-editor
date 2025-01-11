@@ -54,6 +54,16 @@ export default function Login() {
     }
   };
 
+  const testConnection = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/health`);
+      const data = await response.json();
+      console.log('API 健康检查结果:', data);
+    } catch (error) {
+      console.error('API 连接测试失败:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -147,6 +157,14 @@ export default function Login() {
           </form>
         </div>
       </div>
+
+      <button
+        type="button"
+        onClick={testConnection}
+        className="mt-4 w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-400 hover:bg-indigo-500"
+      >
+        测试 API 连接
+      </button>
     </div>
   );
 } 

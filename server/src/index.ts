@@ -14,7 +14,14 @@ app.use(express.json());
 
 // 基本的健康检查接口
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ 
+    status: 'ok',
+    time: new Date().toISOString(),
+    cors: {
+      origin: req.headers.origin,
+      method: req.method
+    }
+  });
 });
 
 // 启动服务器
