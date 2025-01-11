@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client';
+import authRoutes from './routes/auth';
 
 dotenv.config();
 
@@ -26,6 +27,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// 路由配置
+app.use('/api/auth', authRoutes);
 
 // 基本的健康检查接口
 app.get('/api/health', (req, res) => {
