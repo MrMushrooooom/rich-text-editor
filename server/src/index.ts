@@ -29,10 +29,10 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // 路由配置
-app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
 
 // 基本的健康检查接口
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ 
     status: 'ok',
     time: new Date().toISOString(),
