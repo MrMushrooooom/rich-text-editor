@@ -9,7 +9,22 @@ const app = express();
 const prisma = new PrismaClient();
 const port = process.env.PORT || 3001;
 
-app.use(cors());
+// 打印所有请求的中间件
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  console.log('Headers:', req.headers);
+  next();
+});
+
+// 配置 CORS
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || 'https://rich-text-editor-omega.vercel.app',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // 基本的健康检查接口
@@ -17,9 +32,37 @@ app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'ok',
     time: new Date().toISOString(),
-    cors: {
-      origin: req.headers.origin,
-      method: req.method
+    environment: {
+      NODE_ENV: process.env.NODE_ENV,
+      PORT: process.env.PORT,
+      CORS_ORIGIN: process.env.CORS_ORIGIN
+    },
+    request: {
+      path: req.path,
+      method: req.method,
+      headers: req.headers,
+      origin: req.headers.origin
+    }
+  });
+});
+
+// 调试路由 - 显示所有环境变量
+app.get('/api/debug', (req, res) => {
+  res.json({
+    environment: {
+      NODE_ENV: process.env.NODE_ENV,
+      PORT: process.env.PORT,
+      CORS_ORIGIN: process.env.CORS_ORIGIN
+    },
+    request: {
+      path: req.path,
+      method: req.method,
+      headers: req.headers,
+      origin: req.headers.origin
+    },
+    vercel: {
+      region: process.env.VERCEL_REGION,
+      environment: process.env.VERCEL_ENV
     }
   });
 });
@@ -27,4 +70,9 @@ app.get('/api/health', (req, res) => {
 // 启动服务器
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  console.log('Environment:', {
+    NODE_ENV: process.env.NODE_ENV,
+    PORT: port,
+    CORS_ORIGIN: process.env.CORS_ORIGIN
+  });
 }); 
