@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client';
 import authRoutes from './routes/auth';
+import documentRoutes from './routes/documents';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -58,6 +59,9 @@ app.use((req, res, next) => {
 console.log('配置认证路由: /api/auth/* 和 /auth/*');
 app.use('/api/auth', authRoutes);  // 处理带 /api 前缀的请求
 app.use('/auth', authRoutes);      // 保持原有路由以兼容
+
+console.log('配置文档路由: /api/documents/*');
+app.use('/api/documents', documentRoutes);  // 注册文档路由
 
 // 404 处理中间件
 app.use((req, res) => {
