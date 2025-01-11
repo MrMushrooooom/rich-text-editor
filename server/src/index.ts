@@ -21,11 +21,15 @@ app.use((req, res, next) => {
 const corsOptions = {
   origin: process.env.CORS_ORIGIN || 'https://rich-text-editor-omega.vercel.app',
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+  exposedHeaders: ['Set-Cookie'],
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // 启用 OPTIONS 预检请求处理
+
 app.use(express.json());
 
 // 路由配置
