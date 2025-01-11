@@ -1,0 +1,49 @@
+{
+  "name": "@rich-text-editor/client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "@tiptap/extension-code-block": "^2.11.1",
+    "@tiptap/extension-color": "^2.11.1",
+    "@tiptap/extension-font-family": "^2.11.0",
+    "@tiptap/extension-heading": "^2.11.0",
+    "@tiptap/extension-highlight": "^2.11.1",
+    "@tiptap/extension-image": "^2.11.1",
+    "@tiptap/extension-link": "^2.11.1",
+    "@tiptap/extension-subscript": "^2.11.1",
+    "@tiptap/extension-superscript": "^2.11.1",
+    "@tiptap/extension-task-item": "^2.11.1",
+    "@tiptap/extension-task-list": "^2.11.1",
+    "@tiptap/extension-text-align": "^2.11.1",
+    "@tiptap/extension-text-style": "^2.11.1",
+    "@tiptap/extension-underline": "^2.11.1",
+    "@tiptap/pm": "^2.11.0",
+    "@tiptap/react": "^2.11.1",
+    "@tiptap/starter-kit": "^2.11.1",
+    "cookies-next": "^5.0.2",
+    "next": "15.1.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.1",
+    "turndown": "^7.2.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/turndown": "^5.0.5",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
