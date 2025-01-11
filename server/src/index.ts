@@ -58,8 +58,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // 路由配置
-console.log('配置认证路由: /auth/*');
-app.use('/auth', authRoutes);
+console.log('配置认证路由: /api/auth/* 和 /auth/*');
+app.use('/api/auth', authRoutes);  // 处理带 /api 前缀的请求
+app.use('/auth', authRoutes);      // 保持原有路由以兼容
 
 // 404 处理中间件
 app.use((req, res, next) => {
@@ -92,10 +93,29 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 app.listen(port, () => {
   console.log('\n=== 服务器启动 ===');
   console.log(`服务器运行在端口: ${port}`);
-  console.log('环境配置:', {
+  console.log('完整环境变量:', {
     NODE_ENV: process.env.NODE_ENV,
     PORT: port,
-    CORS_ORIGIN: process.env.CORS_ORIGIN
+    CORS_ORIGIN: process.env.CORS_ORIGIN,
+    VERCEL_URL: process.env.VERCEL_URL,
+    VERCEL_ENV: process.env.VERCEL_ENV,
+    VERCEL_REGION: process.env.VERCEL_REGION
+  });
+  
+  // 打印所有注册的路由
+  console.log('\n注册的路由:');
+  app._router.stack.forEach((middleware) => {
+    if (middleware.route) {
+      // 路由中间件
+      console.log(`${Object.keys(middleware.route.methods).join(',')} ${middleware.route.path}`);
+    } else if (middleware.name === 'router') {
+      // 路由器中间件
+      middleware.handle.stack.forEach((handler) => {
+        if (handler.route) {
+          console.log(`${Object.keys(handler.route.methods).join(',')} ${middleware.regexp} ${handler.route.path}`);
+        }
+      });
+    }
   });
   console.log('=== 服务器启动完成 ===\n');
 }); 
