@@ -79,6 +79,15 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     path: req.path,
     headers: req.headers
   });
+
+  // 设置响应头
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Access-Control-Allow-Origin', process.env.CORS_ORIGIN || 'https://rich-text-editor-omega.vercel.app');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Expose-Headers', 'Set-Cookie');
+  res.setHeader('Vary', 'Origin');
+
+  // 发送错误响应
   res.status(500).json({ 
     error: process.env.NODE_ENV === 'development' ? err.message : '服务器内部错误',
     path: req.path,
