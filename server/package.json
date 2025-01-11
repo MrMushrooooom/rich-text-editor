@@ -7,6 +7,7 @@
     "dev": "cross-env NODE_ENV=development nodemon src/index.ts",
     "build": "prisma generate && tsc",
     "start": "cross-env NODE_ENV=production node dist/index.js",
+    "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio"
